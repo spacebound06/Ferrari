@@ -1,0 +1,19 @@
+.team-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  justify-content: left !important;
+  text-align: left !important;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding-left: 0.5rem;
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 6rem 2rem 3rem 2rem; /* Increased top padding from 3rem to 6rem */
+}

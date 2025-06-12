@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import ferrariLogo from './ferrari_black.jpg'
 
-function Header() {
+// Accept user prop
+function Header({ user }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ function Header() {
             transition: color 0.2s, border-bottom 0.2s, transform 0.18s;
             border-bottom: none;
             padding-bottom: 2px;
-            font-size: 1.15rem; /* reduced from 1.5rem to 0.75rem */
+            font-size: 1.5rem;
           }
           .header-link:hover {
             color: white;
@@ -49,7 +50,7 @@ function Header() {
           fontFamily: "'Montserrat', Arial, sans-serif",
           color: 'white',
           zIndex: 1000,
-          transition: 'padding 0.5s cubic-bezier(.4,0,.2,1)' // smoother/slower transition
+          transition: 'padding 0.5s cubic-bezier(.4,0,.2,1)'
         }}
       >
         <div style={{
@@ -70,7 +71,7 @@ function Header() {
                 background: 'none',
                 border: 'none',
                 marginTop: '0',
-                transition: 'height 0.5s cubic-bezier(.4,0,.2,1), width 0.5s cubic-bezier(.4,0,.2,1)' // smooth logo resize
+                transition: 'height 0.5s cubic-bezier(.4,0,.2,1), width 0.5s cubic-bezier(.4,0,.2,1)'
               }}
             />
           </Link>
@@ -79,22 +80,13 @@ function Header() {
           display: 'flex',
           gap: '2.5rem',
           alignItems: 'center',
-          fontSize: '1rem',
-          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+          fontSize: '1.5rem',
+          fontFamily: "'Montserrat', Arial, sans-serif",
           fontWeight: 'bold',
           marginLeft: '3.5rem',
-          flex: 1,
-          textTransform: 'uppercase',
+          flex: 1
         }}>
-          <Link
-            to="/"
-            className="header-link"
-            onClick={() => {
-              window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-            }}
-          >
-            Home
-          </Link>
+          <Link to="/" className="header-link">Home</Link>
           <Link to="/merch" className="header-link">Collections</Link>
           <Link to="/racing" className="header-link">Racing</Link>
           <Link to="/team" className="header-link">Team</Link>
@@ -108,25 +100,31 @@ function Header() {
           alignItems: 'center',
           fontSize: '1.5rem'
         }}>
-          <Link
-            to="/login"
-            className="header-link"
-            style={{
-              marginRight: '0.5rem'
-            }}
-          >
-            Login
-          </Link>
-          <span style={{ color: 'white', fontWeight: 'bold' }}>/</span>
-          <Link
-            to="/register"
-            className="header-link"
-            style={{
-              marginLeft: '0.5rem'
-            }}
-          >
-            Register
-          </Link>
+          {user && user.username ? (
+            <span className="header-link" style={{ cursor: "default" }}>{user.username}</span>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="header-link"
+                style={{
+                  marginRight: '0.5rem'
+                }}
+              >
+                Login
+              </Link>
+              <span style={{ color: 'white', fontWeight: 'bold' }}>/</span>
+              <Link
+                to="/register"
+                className="header-link"
+                style={{
+                  marginLeft: '0.5rem'
+                }}
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </>
@@ -134,13 +132,3 @@ function Header() {
 }
 
 export default Header
-
-// If you still get the error, double-check:
-// 1. The file 'Ferrari-F1-Logo-1.png' exists in 'c:\Users\nayan.giri\Desktop\Website\MyProj\src\'.
-// 2. The filename matches exactly, including capitalization and extension.
-// 3. If the file is in 'public' instead of 'src', use <img src="/Ferrari-F1-Logo-1.png" ... /> instead of import.
-
-//
-// Example for using public folder (if you prefer):
-// <img src="/Ferrari-F1-Logo-1.png" alt="Ferrari Logo" style={{ height: '48px', width: 'auto' }} />
-//

@@ -1,0 +1,78 @@
+.driver-section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  padding-top: 7vh; /* pushes cards lower */
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #111; /* match background to avoid visual gaps */
+}
+
+.driver-card {
+  flex: 1;
+  height: 85vh; /* reduce height */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.driver-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.driver-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+  background: linear-gradient(0deg, rgba(0,0,0,0.82) 60%, rgba(0,0,0,0.18) 100%);
+  color: #fff;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.driver-role {
+  font-size: 1.05rem;
+  color: #e0e0e0;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.08em;
+}
+
+.driver-name {
+  font-size: 2.1rem;
+  font-weight: bold;
+  margin: 0 0 0.7rem 0;
+  letter-spacing: 0.04em;
+}
+
+.discover-link {
+  color: #fff;
+  font-size: 1.1rem;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+
+.discover-link:hover {
+  color: #ff2800;
+}
+
+@media (max-width: 900px) {
+  .driver-section {
+    flex-direction: column;
+    padding-top: 0;
+  }
+
+  .driver-card {
+    width: 100vw;
+    height: 340px;
+  }
+}

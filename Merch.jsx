@@ -6,7 +6,7 @@ const handleAnimationComplete = () => {
   console.log('Animation completed!');
 };
 
-function Merch() {
+export default function Merch() {
   const [bgOpacity, setBgOpacity] = useState(0);
   const [showStoreLink, setShowStoreLink] = useState(false);
 
@@ -26,7 +26,26 @@ function Merch() {
   }, []);
 
   return (
-    <div className="page-root">
+    <div className="page-root merch-root" style={{ position: "relative", zIndex: 1 }}>
+      <video
+        className="merch-bg-video"
+        src="/Ferrari x Charles Leclerc  ｜ The making of the capsule.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          objectFit: "cover",
+          zIndex: 0,
+          pointerEvents: "none",
+          opacity: 0.55,
+        }}
+      />
       <div
         className="page-bg-overlay"
         style={{
@@ -163,4 +182,3 @@ function Merch() {
   </div>
   )
 }
-export default Merch

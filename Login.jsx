@@ -1,47 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./index.css";
 
 export default function Login({ onLogin }) {
-  const [scrolled, setScrolled] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [bgOpacity, setBgOpacity] = useState(0);
 
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 30);
-      // Dynamic background opacity
-      const scrollPercent =
-        (window.scrollY /
-          (document.documentElement.scrollHeight - window.innerHeight)) *
-        100;
-      const minOpacity = 0.0;
-      const maxOpacity = 0.7;
-      const opacity = Math.min(
-        maxOpacity,
-        minOpacity + (maxOpacity - minOpacity) * (scrollPercent / 100)
-      );
-      setBgOpacity(opacity);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    // Remove SF25.jpg background only for Login page
-    const prevBg = document.body.style.background;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.background = "none";
-    document.body.style.overflow = "hidden"; // Prevent scrolling
-    return () => {
-      document.body.style.background = prevBg;
-      document.body.style.overflow = prevOverflow; // Restore scrolling
-    };
-  }, []);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin({ username, password });
+    try {
+      const res = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Login successful!");
+        setUsername("");
+        setPassword("");
+        if (onLogin) onLogin({ username });
+      } else {
+        alert(data.message || "Login failed");
+      }
+    } catch (err) {
+      alert("Login failed");
+    }
   };
 
   return (
@@ -81,7 +64,7 @@ export default function Login({ onLogin }) {
       <div
         className="page-bg-overlay"
         style={{
-          background: `rgba(0,0,0,${bgOpacity})`,
+          background: `rgba(0,0,0,0.7)`,
           transition: "background 0.4s cubic-bezier(.4,0,.2,1)",
           position: "fixed",
           top: 0,

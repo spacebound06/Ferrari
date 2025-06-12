@@ -205,9 +205,9 @@ export default function Home() {
           justifyContent: "center",
           alignItems: "center",
           gap: "2.5rem",
-          margin: "3.5rem 0 1.5rem 0",
+          margin: "2.2rem 0 4.5rem 0",
           position: "relative",
-          left: "-2.5rem", // move all logos a little to the left
+          left: "1.5rem", // move all logos a little to the right
         }}
       >
         <a href="https://www.facebook.com/Ferrari" target="_blank" rel="noopener noreferrer">

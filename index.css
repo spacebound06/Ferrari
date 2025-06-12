@@ -107,7 +107,7 @@ button:focus-visible {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: inherit;
+  background: inherit; /* <-- this ensures both login and register use the same background */
   position: relative;
   z-index: 1;
 }
@@ -118,14 +118,15 @@ button:focus-visible {
   max-width: 420px;
   padding: 2.5rem 2rem;
   border-radius: 18px;
-z-index: ;  background: rgba(128, 128, 128, 0.15);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  background: rgba(128, 128, 128, 0.15);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   z-index: 2;
   align-items: stretch; /* ensure children stretch to form width */
 }
+
 
 .auth-form h2 {
   margin-bottom: 1.5rem;
@@ -315,6 +316,15 @@ z-index: ;  background: rgba(128, 128, 128, 0.15);
   background: rgba(0,0,0,0.7);
 }
 
+body, html, #root {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw;
+  min-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -326,6 +336,9 @@ z-index: ;  background: rgba(128, 128, 128, 0.15);
   button {
     background-color: #f9f9f9;
   }
+}
+body {
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 body, input, button, select, textarea, .header-link, .auth-form h2, .auth-input {
@@ -382,36 +395,326 @@ header, nav {
 
 /* Fixed carousel on top of background */
 .racing-carousel-wrapper {
-  margin-top: 11rem;
+  position: sticky;
+  top: 0;
   z-index: 10;
-  position: relative;
+  background: black; /* ensure it's readable */
 }
 
-/* Scrollable content below carousel */
 .racing-scroll-content {
+  z-index: 1;
   position: relative;
-  z-index: 5;
-  margin-top: 100vh;
   background: #f5f5f5;
-  padding: 5rem 2rem;
+  padding: 0;
+  margin: 0;
 }
 
-.racing-section {
-  max-width: 850px;
-  margin: 0 auto 5rem;
-  padding: 2rem 2.5rem;
-  background: white;
-  color: #111;
-  border-radius: 12px;
-  box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
+.racing-video-scroll-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.racing-section h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.racing-scroll-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.racing-section p {
-  font-size: 1.15rem;
-  line-height: 1.65;
+.video-overlay-text {
+  position: absolute;
+  left: 0;
+  bottom: 2.5rem;
+  width: 100%;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  font-size: 2.2rem;
+  font-style: italic;
+  font-weight: normal;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  line-height: 1.05;         /* reduce text letter height */
+  letter-spacing: 0.10em;    /* increase letter spacing a little */
+}
+
+/* Keep the carousel flush to the left and sticky */
+.racing-carousel-wrapper {
+  left: 0;
+  box-sizing: border-box;
+}
+
+/* Fullscreen scroll-video section below */
+.racing-video-scroll-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.racing-scroll-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-overlay-text {
+  position: absolute;
+  left: 0;
+  bottom: 1.5rem;
+  width: 100%;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  font-size: 2.0rem;
+  font-weight: normal; /* not bold */
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+/* [ALL YOUR EXISTING CSS CONTENT ABOVE] */
+
+/* Ferrari Racing Footer */
+.ferrari-footer {
+  background-color: #ffffff; /* Ferrari red */
+  padding: 2.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.footer-logo {
+  height: 32px;
+  max-width: 120px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: brightness(0) invert(1); /* Makes logos appear white on red */
+}
+.driver-section {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background: #1a1a1a; /* Dark red tone optional */
+  padding: 4rem 2rem;
+  gap: 2rem;
+  overflow: hidden;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.driver-card {
+  position: relative;
+  flex: 1 1 300px;
+  max-width: 320px;
+  height: 480px;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  text-align: left;
+}
+
+.driver-card:hover {
+  transform: scale(1.05);
+}
+
+.driver-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.95);
+  transition: filter 0.3s;
+}
+
+.driver-card:hover .driver-img {
+  filter: brightness(1.1);
+}
+
+.driver-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1.5rem;
+  color: white;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+  transition: background 0.4s;
+  text-align: left;
+}
+
+.driver-role {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  text-align: left;
+}
+
+.driver-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.4rem 0;
+  text-align: left;
+}
+
+.discover-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.discover-link:hover {
+  color: #e4002b; /* Ferrari red accent */
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Home and Merch page background */
+.page-root.home-root,
+.page-root.merch-root {
+  background: url('./SF25.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;
+}
+
+/* Register page background: SF25.jpg on same layer as video */
+.page-root.register-root {
+  position: relative;
+  z-index: 1;
+  /* Remove background-image from here to avoid stacking below video */
+}
+.page-root.register-root .register-bg-media-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: url('/SF25.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;
+  opacity: 1; /* Ensure image is fully visible */
+}
+.page-root.register-root .register-bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Team.css */
+.team-page {
+  background-color: #111;
+  color: white;
+  font-family: 'Helvetica Neue', sans-serif;
+  min-height: 100vh;
+  text-align: left;
+}
+
+.team-hero {
+  padding: 4rem 2rem;
+  background: #000;
+  border-bottom: 2px solid #ff2800;
+  text-align: left;
+}
+
+.team-heading {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #ff2800;
+  text-align: left;
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  text-align: left;
+}
+
+.team-card {
+  position: relative;
+  width: 280px;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #000;
+  transition: transform 0.3s ease;
+  text-align: left;
+}
+
+.team-card:hover {
+  transform: scale(1.03);
+}
+
+.team-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.team-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1.2rem;
+  background: linear-gradient(0deg, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0.1) 100%);
+  color: #fff;
+  text-align: left;
+}
+
+.team-role {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.team-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* Merch page video background */
+.page-root.merch-root {
+  background: none !important;
+  position: relative;
+  z-index: 1;
+}
+.page-root.merch-root::before {
+  content: none !important;
+}
+
+/* Team page background */
+.team-page {
+  background: url('./SF25.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;
 }

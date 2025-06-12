@@ -37,9 +37,27 @@ export default function Register({ onRegister }) {
     };
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onRegister({ username, password, email });
+    try {
+      const res = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('Registration successful! Please login.');
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        if (onRegister) onRegister({ username });
+      } else {
+        alert(data.message || 'Registration failed');
+      }
+    } catch (err) {
+      alert('Registration failed');
+    }
   };
 
   return (
